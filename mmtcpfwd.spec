@@ -6,10 +6,11 @@ Release:	2
 Epoch:		2
 License:	GPL
 Group:		Networking/Daemons
-Source0:	http://mmondor.rubiks.net/software/linux/%{name}-%{version}.tar.gz
+Source0:	http://gobot.accela.net/software/stable/%{name}-%{version}.tar.gz
+# Source0-md5:	b1d9ff2aa0059a4df9d4e54ed675be68
 Source1:	%{name}.init
 Source2:	%{name}.conf
-URL:		http://mmondor.rubiks.net/software.html
+URL:		http://gobot.accela.net/software.html
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
