@@ -1,6 +1,12 @@
 #!/bin/sh
 #
-#   /etc/init.d/mmtcpfwd: start or stop mmtcpfwd superserver daemon (Mondor)
+# mmtcpfwd      This shell script takes care of starting and stopping mmtcpfwd.
+#
+# chkconfig:    345 83 27
+# description:  Secure TCP/IP port forwarder
+#      
+# processname:  mmtcpfwd
+# config:       /etc/mmtcpfwd.conf
 #
 
 # Source function library.
