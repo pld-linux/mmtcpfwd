@@ -1,7 +1,7 @@
 Summary:	Secure TCP/IP port forwarder		
 Summary(pl):	Bezpieczny forwarder portow TCP/IP 
 Name:		mmtcpfwd	
-Version:	0.7c
+Version:	0.7d
 Release:	1
 License:	GPL	
 Group:		Networking/Daemons
