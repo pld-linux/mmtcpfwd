@@ -1,8 +1,8 @@
 Summary:	Secure TCP/IP port forwarder		
 Summary(pl):	Bezpieczny forwarder portow TCP/IP 
 Name:		mmtcpfwd	
-Version:	0.7
-Release:	2
+Version:	0.7b
+Release:	1
 License:	GPL	
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -25,13 +25,14 @@ Bezpieczny forwarder portow TCP/IP.
 %setup  -q
 
 %build
+cd src
 %{__make} CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_sysconfdir},/etc/rc.d/init.d}
 
-install mmtcpfwd 	$RPM_BUILD_ROOT%{_sbindir}
+install src/mmtcpfwd 	$RPM_BUILD_ROOT%{_sbindir}
 install %{SOURCE2}	$RPM_BUILD_ROOT%{_sysconfdir}/mmtcpfwd.conf
 install %{SOURCE1}	$RPM_BUILD_ROOT/etc/rc.d/init.d/mmtcpfwd
 
