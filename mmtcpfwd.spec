@@ -60,4 +60,4 @@ fi
 %doc README*
 %attr(750,root,root) %{_sbindir}/*
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mmtcpfwd.conf
-%attr(754,root,root) %{_sysconfdir}/rc.d/init.d/mmtcpfwd
+%attr(754,root,root) /etc/rc.d/init.d/mmtcpfwd
