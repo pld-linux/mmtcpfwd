@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+#   /etc/init.d/mmtcpfwd: start or stop mmtcpfwd superserver daemon (Mondor)
+#
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+case "$1" in
+  start)
+      msg_starting mmtcpfwd
+#	/usr/sbin/mmtcpfwd < /dev/null &> /dev/null
+	/usr/sbin/mmtcpfwd
+      touch /var/lock/subsys/mmtcpfwd
+    ;;
+  stop)
+      msg_stopping  mmtcpfwd
+      killall mmtcpfwd
+      rm -f /var/lock/subsys/mmtcpfwd
+    ;;
+  restart|reload)
+	$0 stop
+	/usr/bin/sleep 10s
+	$0 start
+    ;;
+  *)
+      msg_Usage "$0 {start|stop|status|restart|reload}"
+      exit 1
+    ;;
+esac
+
+exit 0
+
