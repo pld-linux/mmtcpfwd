@@ -1,5 +1,5 @@
 Summary:	Secure TCP/IP port forwarder
-Summary(pl):	Bezpieczny forwarder portow TCP/IP
+Summary(pl):	Bezpieczny forwarder portów TCP/IP
 Name:		mmtcpfwd
 Version:	0.1.0
 Release:	2
@@ -10,16 +10,18 @@ Source0:	http://mmondor.rubiks.net/software/linux/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.conf
 URL:		http://mmondor.rubiks.net/software.html
-Prereq:		rc-scripts
-Prereq:		/sbin/chkconfig
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Secure TCP/IP port forwarder, MASQ fake ident and FTP passive proxy
-superserver intended for linux firewalls with anti-DoS features.
+superserver intended for Linux firewalls with anti-DoS features.
 
 %description -l pl
-Bezpieczny forwarder portow TCP/IP.
+Bezpieczny forwarder portow TCP/IP, fa³szywy serwer ident dla
+maskarady oraz proxy dla pasywnego FTP - przeznaczony dla linuksowych
+firewalli z mo¿liwo¶ciami zapobiegania DoS.
 
 %prep
 %setup  -q
