@@ -36,8 +36,6 @@ install src/mmtcpfwd 	$RPM_BUILD_ROOT%{_sbindir}
 install %{SOURCE2}	$RPM_BUILD_ROOT%{_sysconfdir}/mmtcpfwd.conf
 install %{SOURCE1}	$RPM_BUILD_ROOT/etc/rc.d/init.d/mmtcpfwd
 
-gzip -9nf README*
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -59,7 +57,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc README*
 %attr(750,root,root) %{_sbindir}/*
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mmtcpfwd.conf
 %attr(754,root,root) %{_sysconfdir}/rc.d/init.d/mmtcpfwd
