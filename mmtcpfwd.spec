@@ -11,7 +11,7 @@ Source0:	http://mmondor.rubiks.net/software/linux/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.conf
 URL:		http://mmondor.rubiks.net/software.html	
-Prereq:		chkconfig
+Prereq:		rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -26,7 +26,7 @@ Bezpieczny forwarder portow TCP/IP.
 
 %build
 cd src
-%{__make} CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}"
+%{__make} CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O0 -g}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
