@@ -43,20 +43,10 @@ gzip -9nf README*
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/chkconfig --add mmtcpfwd
-if [ -f /var/lock/subsys/mmtcpfwd ]; then
-	/etc/rc.d/init.d/mmtcpfwd restart 1>&2
-else
-	echo "Run \"/etc/rc.d/init.d/mmtcpfwd start\" to start mmtcpfwd daemon."
-fi
+DESC="%{name} daemon"; %chkconfig_add
 
 %preun
-if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/mmtcpfwd ]; then
-		/etc/rc.d/init.d/mmtcpfwd stop 1>&2
-	fi
-	/sbin/chkconfig --del mmtcpfwd
-fi
+%chkconfig_del
 
 %files
 %defattr(644,root,root,755)
