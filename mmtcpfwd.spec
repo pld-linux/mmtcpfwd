@@ -1,15 +1,15 @@
-Summary:	Secure TCP/IP port forwarder		
-Summary(pl):	Bezpieczny forwarder portow TCP/IP 
-Name:		mmtcpfwd	
+Summary:	Secure TCP/IP port forwarder
+Summary(pl):	Bezpieczny forwarder portow TCP/IP
+Name:		mmtcpfwd
 Version:	0.1.0
 Release:	2
 Epoch:		2
-License:	GPL	
+License:	GPL
 Group:		Networking/Daemons
 Source0:	http://mmondor.rubiks.net/software/linux/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.conf
-URL:		http://mmondor.rubiks.net/software.html	
+URL:		http://mmondor.rubiks.net/software.html
 Prereq:		rc-scripts
 Prereq:		/sbin/chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -61,5 +61,5 @@ fi
 %defattr(644,root,root,755)
 %doc *.gz
 %attr(750,root,root) %{_sbindir}/*
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mmtcpfwd.conf 
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mmtcpfwd.conf
 %attr(754,root,root) %{_sysconfdir}/rc.d/init.d/mmtcpfwd
