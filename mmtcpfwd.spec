@@ -4,15 +4,20 @@ Name:		mmtcpfwd
 Version:	0.7
 Release:	1
 Group:		Networking/Daemons
-Group(pl):	-
+Group(de):	Netzwerkwesen/Server
+Group(pl):	Sieciowe/Serwery
 License:	GPL	
-Source0:	http://mmondor.rubiks.net/software/linux/mmtcpfwd-0.7.tar.gz
+Source0:	http://mmondor.rubiks.net/software/linux/%{name}-%{version}.tar.gz
+Source1:	%{name}.init
+Source2:	%{name}.conf
 URL:		http://mmondor.rubiks.net/software.html	
+Prereq:		chkconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Secure TCP/IP port forwarder, MASQ fake ident and FTP passive proxy superserver intended for linux firewalls with anti-DoS features
-      
+Secure TCP/IP port forwarder, MASQ fake ident and FTP passive proxy
+superserver intended for linux firewalls with anti-DoS features
+
 %description -l pl
 Bezpieczny forwarder portow TCP/IP
 
@@ -20,30 +25,41 @@ Bezpieczny forwarder portow TCP/IP
 %setup  -q
 
 %build
-%{__make} CFLAGS="$RPM_OPT_FLAGS"
+%{__make} CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_sbindir}  $RPM_BUILD_ROOT%{_sysconfdir}
+install -d $RPM_BUILD_ROOT%{_sbindir}  $RPM_BUILD_ROOT%{_sysconfdir} \
+	   $RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d
 
-install mmtcpfwd $RPM_BUILD_ROOT%{_sbindir}
-install mmtcpfwd.conf $RPM_BUILD_ROOT%{_sysconfdir}
-
-gzip -9nf README
+install mmtcpfwd 	$RPM_BUILD_ROOT%{_sbindir}
+install %{SOURCE2}	$RPM_BUILD_ROOT%{_sysconfdir}/mmtcpfwd.conf
+install %{SOURCE1}	$RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/mmtcpfwd
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+/sbin/chkconfig --add mmtcpfwd
+if [ -f /var/lock/subsys/mmtcpfwd ]; then
+    /etc/rc.d/init.d/mmtcpfwd restart 1>&2
+else
+    echo "Run \"/etc/rc.d/init.d/mmtcpfwd start\" to start mmtcpfwd daemon."
+fi
+
+%preun
+if [ "$1" = "0" ]; then
+    if [ -f /var/lock/subsys/mmtcpfwd ]; then
+        /etc/rc.d/init.d/mmtcpfwd stop 1>&2
+    fi
+    /sbin/chkconfig --del mmtcpfwd
+fi
+
 %files
 %defattr(644,root,root,755)
-%attr(4750,root,icmp) %{_sbindir}/*
+%attr(750,root,root) %{_sbindir}/*
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mmtcpfwd.conf 
+%attr(754,root,root) %{_sysconfdir}/rc.d/init.d/mmtcpfwd
+
 %doc README*
-
-%changelog
-* %{date} PLD Team <pld-list@pld.org.pl>
-All persons listed below can be reached at <cvs_login>@pld.org.pl
-
-$Log: mmtcpfwd.spec,v $
-Revision 1.1  2001-02-08 17:04:31  areq
-- initial release NFY
