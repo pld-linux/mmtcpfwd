@@ -14,19 +14,30 @@
 
 case "$1" in
   start)
-      msg_starting mmtcpfwd
-#	/usr/sbin/mmtcpfwd < /dev/null &> /dev/null
-	/usr/sbin/mmtcpfwd
-      touch /var/lock/subsys/mmtcpfwd
+      # Check if the service is already running?
+      if [ ! -f /var/lock/subsys/mmtcpfwd ]; then
+		msg_starting mmtcpfwd
+		daemon mmtcpfwd
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/mmtcpfwd
+      else
+		msg_Already_Running mmtcpfwd
+		exit 1
+      fi
     ;;
   stop)
-      msg_stopping  mmtcpfwd
-      killall mmtcpfwd
-      rm -f /var/lock/subsys/mmtcpfwd
+      # Stop daemons.
+      if [ -f /var/lock/subsys/mmtcpfwd ]; then
+               msg_stopping mmtcpfwd
+                killproc mmtcpfwd
+                rm -f /var/lock/subsys/mmtcpfwd >/dev/null 2>&1
+      else
+                msg_Not_Running mmtcpfwd
+                exit 1
+      fi
     ;;
   restart|reload)
 	$0 stop
-	/usr/bin/sleep 10s
 	$0 start
     ;;
   *)
