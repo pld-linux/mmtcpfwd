@@ -1,12 +1,12 @@
 #!/bin/sh
 #
-# mmtcpfwd      This shell script takes care of starting and stopping mmtcpfwd.
+# mmtcpfwd	This shell script takes care of starting and stopping mmtcpfwd.
 #
-# chkconfig:    345 83 27
-# description:  Secure TCP/IP port forwarder
-#      
-# processname:  mmtcpfwd
-# config:       /etc/mmtcpfwd.conf
+# chkconfig:	345 83 27
+# description:	Secure TCP/IP port forwarder
+#
+# processname:	mmtcpfwd
+# config:	/etc/mmtcpfwd.conf
 #
 
 # Source function library.
@@ -14,37 +14,39 @@
 
 case "$1" in
   start)
-      # Check if the service is already running?
-      if [ ! -f /var/lock/subsys/mmtcpfwd ]; then
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/mmtcpfwd ]; then
 		msg_starting mmtcpfwd
 		daemon mmtcpfwd
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/mmtcpfwd
-      else
-		msg_Already_Running mmtcpfwd
+	else
+		msg_already_running mmtcpfwd
 		exit 1
-      fi
-    ;;
+	fi
+	;;
   stop)
-      # Stop daemons.
-      if [ -f /var/lock/subsys/mmtcpfwd ]; then
-               msg_stopping mmtcpfwd
-                killproc mmtcpfwd
-                rm -f /var/lock/subsys/mmtcpfwd >/dev/null 2>&1
-      else
-                msg_Not_Running mmtcpfwd
-                exit 1
-      fi
-    ;;
+	# Stop daemons.
+	if [ -f /var/lock/subsys/mmtcpfwd ]; then
+		msg_stopping mmtcpfwd
+		killproc mmtcpfwd
+		rm -f /var/lock/subsys/mmtcpfwd >/dev/null 2>&1
+	else
+		msg_not_running mmtcpfwd
+  		exit 1
+	fi
+	;;
   restart|reload)
 	$0 stop
 	$0 start
-    ;;
+	;;
+  status)
+	status mmtcpfwd
+	;;
   *)
-      msg_Usage "$0 {start|stop|status|restart|reload}"
-      exit 1
-    ;;
+	msg_usage "$0 {start|stop|restart|reload|status}"
+	exit 1
+	;;
 esac
 
-exit 0
-
+exit $RETVAL
