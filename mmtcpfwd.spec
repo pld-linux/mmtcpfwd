@@ -11,8 +11,8 @@ Source0:	http://gobot.accela.net/software/stable/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.conf
 URL:		http://gobot.accela.net/software.html
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -62,5 +62,5 @@ fi
 %defattr(644,root,root,755)
 %doc README*
 %attr(750,root,root) %{_sbindir}/*
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mmtcpfwd.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mmtcpfwd.conf
 %attr(754,root,root) /etc/rc.d/init.d/mmtcpfwd
