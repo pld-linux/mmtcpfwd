@@ -11,6 +11,7 @@ Source0:	http://gobot.accela.net/software/stable/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.conf
 URL:		http://gobot.accela.net/software.html
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -44,17 +45,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add mmtcpfwd
-if [ -f /var/lock/subsys/mmtcpfwd ]; then
-	/etc/rc.d/init.d/mmtcpfwd restart 1>&2
-else
-	echo "Run \"/etc/rc.d/init.d/mmtcpfwd start\" to start mmtcpfwd daemon."
-fi
+%service mmtcpfwd restart "mmtcpfwd daemon"
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/mmtcpfwd ]; then
-		/etc/rc.d/init.d/mmtcpfwd stop 1>&2
-	fi
+	%service mmtcpfwd stop
 	/sbin/chkconfig --del mmtcpfwd
 fi
 
