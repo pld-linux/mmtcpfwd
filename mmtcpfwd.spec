@@ -2,7 +2,7 @@ Summary:	Secure TCP/IP port forwarder
 Summary(pl):	Bezpieczny forwarder portów TCP/IP
 Name:		mmtcpfwd
 Version:	0.1.0
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL
 Group:		Networking/Daemons
@@ -26,11 +26,12 @@ maskarady oraz proxy dla pasywnego FTP - przeznaczony dla linuksowych
 firewalli z mo¿liwo¶ciami zapobiegania DoS.
 
 %prep
-%setup  -q
+%setup -q
 
 %build
-cd src
-%{__make} CFLAGS="%{rpmcflags}"
+%{__make} -C src \
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
