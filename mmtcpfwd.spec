@@ -1,5 +1,5 @@
 Summary:	Secure TCP/IP port forwarder
-Summary(pl.UTF-8):   Bezpieczny forwarder portów TCP/IP
+Summary(pl.UTF-8):	Bezpieczny forwarder portów TCP/IP
 Name:		mmtcpfwd
 Version:	0.1.0
 Release:	4
